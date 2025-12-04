@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosConfig from "../util/axiosConfig";
-import Overview from "./Overview";
 import { Pie, Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -28,6 +27,7 @@ const Dashboard = () => {
     totalIncome: 0,
     totalExpenses: 0,
   });
+
   const [recent, setRecent] = useState([]);
   const [monthly, setMonthly] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -63,7 +63,7 @@ const Dashboard = () => {
     );
   }
 
-  // ---------- Chart Data ----------
+  // --------- Chart Data ----------
   const pieData = {
     labels: ["Income", "Expense"],
     datasets: [
@@ -93,33 +93,34 @@ const Dashboard = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* -------- Sidebar -------- */}
+
+      {/* ---------------- LEFT FIXED SIDEBAR ---------------- */}
       <aside className="hidden md:flex flex-col w-64 bg-white shadow-lg p-6 fixed top-16 left-0 h-[calc(100vh-64px)]">
         <nav className="flex flex-col gap-4 mt-4">
-          <Link to="/dashboard" className="px-4 py-2 bg-yellow-200 rounded font-bold">
+          <Link className="px-4 py-2 bg-yellow-200 rounded font-bold" to="/dashboard">
             Dashboard
           </Link>
-          <Link to="/income" className="px-4 py-2 rounded hover:bg-yellow-100">
+          <Link className="px-4 py-2 rounded hover:bg-yellow-100" to="/income">
             Income
           </Link>
-          <Link to="/expenses" className="px-4 py-2 rounded hover:bg-yellow-100">
+          <Link className="px-4 py-2 rounded hover:bg-yellow-100" to="/expenses">
             Expenses
           </Link>
-          <Link to="/category" className="px-4 py-2 rounded hover:bg-yellow-100">
+          <Link className="px-4 py-2 rounded hover:bg-yellow-100" to="/category">
             Category
           </Link>
-          <Link to="/filter" className="px-4 py-2 rounded hover:bg-yellow-100">
+          <Link className="px-4 py-2 rounded hover:bg-yellow-100" to="/filter">
             Filter
           </Link>
         </nav>
       </aside>
 
-      {/* -------- Main Content -------- */}
-      <main className="flex-1 p-6 md:ml-64 mt-16">
+      {/* ---------------- CENTER MAIN AREA ---------------- */}
+      <main className="flex-1 p-6 md:ml-64 md:mr-64 mt-16">
         <h1 className="text-3xl font-semibold mb-2">
           Welcome, {fullName || "User"} 👋
         </h1>
-        <p className="text-gray-500">Here is your financial overview</p>
+        <p className="text-gray-500">Your financial overview</p>
 
         {/* -------- Summary Cards -------- */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
@@ -127,10 +128,12 @@ const Dashboard = () => {
             <h3 className="text-lg text-gray-600">Total Balance</h3>
             <p className="text-3xl font-bold text-indigo-600">₹{summary.totalBalance}</p>
           </div>
+
           <div className="bg-white p-6 shadow rounded-xl border">
             <h3 className="text-lg text-gray-600">Total Income</h3>
             <p className="text-3xl font-bold text-green-600">₹{summary.totalIncome}</p>
           </div>
+
           <div className="bg-white p-6 shadow rounded-xl border">
             <h3 className="text-lg text-gray-600">Total Expenses</h3>
             <p className="text-3xl font-bold text-red-600">₹{summary.totalExpenses}</p>
@@ -140,12 +143,16 @@ const Dashboard = () => {
         {/* -------- Charts -------- */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10">
           <div className="bg-white p-6 shadow rounded-xl border">
-            <h3 className="text-lg font-semibold text-gray-700 mb-4">Income vs Expense</h3>
+            <h3 className="text-lg font-semibold text-gray-700 mb-4">
+              Income vs Expense
+            </h3>
             <Pie data={pieData} />
           </div>
 
           <div className="bg-white p-6 shadow rounded-xl border">
-            <h3 className="text-lg font-semibold text-gray-700 mb-4">Monthly Trend</h3>
+            <h3 className="text-lg font-semibold text-gray-700 mb-4">
+              Monthly Trend
+            </h3>
             <Bar data={barData} />
           </div>
         </div>
@@ -189,11 +196,6 @@ const Dashboard = () => {
           )}
         </div>
       </main>
-
-      {/* -------- Right Overview Panel -------- */}
-      <aside className="hidden md:block w-64 p-6 mt-16">
-        <Overview summary={summary} />
-      </aside>
     </div>
   );
 };
