@@ -13,6 +13,9 @@ const Signup = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+    const [success, setSuccess] = useState("");    
+
+
   const navigate = useNavigate();
 
   // Form submit handler
@@ -39,19 +42,24 @@ const Signup = () => {
       });
 
       console.log("Signup success:", response.data); 
+     setSuccess("🎉 Signup Successful! Redirecting to Login...");
 
-      // Clear form fields
-      setFullName("");
-      setEmail("");
-      setPassword("");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
 
-      // Redirect to login page after success
-      navigate("/login");
+  //  Save fullName and token in localStorage
+      localStorage.setItem("fullName", fullName); // user input
+      localStorage.setItem("token", response.data.token || ""); 
+
+      //  navigate to dashboard after signup
+      // navigate("/dashboard");
+
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Signup failed. Please try again.");
     } finally {
-      setLoading(false); // hide loading state
+      setLoading(false);
     }
   };
 

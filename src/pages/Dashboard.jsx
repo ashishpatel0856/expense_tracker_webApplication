@@ -12,6 +12,7 @@ import {
   CategoryScale,
   LinearScale,
 } from "chart.js";
+import { motion } from "framer-motion";
 
 ChartJS.register(
   ArcElement,
@@ -23,6 +24,10 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
+
+  // fetch name from local storage
+  const fullName = localStorage.getItem("fullName");
+
   const [summary, setSummary] = useState({
     totalBalance: 0,
     totalIncome: 0,
@@ -32,22 +37,20 @@ const Dashboard = () => {
   const [monthly, setMonthly] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fullName = localStorage.getItem("fullName");
 
-  // Load initial dashboard data
   const loadDashboard = async () => {
     try {
-      const dashboardRes = await axiosConfig.get("/dashboard");
+      const res = await axiosConfig.get("/dashboard");
       setSummary({
-        totalBalance: dashboardRes.data.totalBalance,
-        totalIncome: dashboardRes.data.totalIncomes,
-        totalExpenses: dashboardRes.data.totalExpenses,
+        totalBalance: res.data.totalBalance,
+        totalIncome: res.data.totalIncomes,
+        totalExpenses: res.data.totalExpenses,
       });
-      setTransactions(dashboardRes.data.recentTransactions || []);
-      setMonthly(dashboardRes.data.monthlyTrend || []); // if backend sends monthly data
+      setTransactions(res.data.recentTransactions || []);
+      setMonthly(res.data.monthlyTrend || []);
     } catch (err) {
-      console.error("Dashboard Load Error:", err);
-      alert("Error loading dashboard data");
+      console.log(err);
+      alert("Failed to load dashboard");
     } finally {
       setLoading(false);
     }
@@ -60,130 +63,169 @@ const Dashboard = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen text-xl">
-        Loading dashboard...
+        Loading...
       </div>
     );
   }
 
-  // Pie Chart: Income vs Expense
   const pieData = {
     labels: ["Income", "Expense"],
     datasets: [
       {
         data: [summary.totalIncome, summary.totalExpenses],
-        backgroundColor: ["#4ade80", "#f87171"],
+        backgroundColor: ["#22c55e", "#f43f5e"],
       },
     ],
   };
 
-  // Bar Chart: Monthly Trend
   const barData = {
     labels: monthly.map((m) => m.month),
     datasets: [
       {
         label: "Income",
         data: monthly.map((m) => m.income),
-        backgroundColor: "#4ade80",
+        backgroundColor: "#22c55e",
       },
       {
         label: "Expense",
         data: monthly.map((m) => m.expense),
-        backgroundColor: "#f87171",
+        backgroundColor: "#f43f5e",
       },
     ],
   };
 
-  // Handle filtered results from Filter component
-  const handleFilterResult = (filteredData) => {
-    setTransactions(filteredData);
-  };
+
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* ---------------- LEFT FIXED SIDEBAR ---------------- */}
-      <aside className="hidden md:flex flex-col w-64 bg-white shadow-lg p-6 fixed top-20 left-0 h-[calc(100vh-80px)]">
-        <nav className="flex flex-col gap-4 mt-4">
-          <Link className="px-4 py-2 bg-yellow-200 rounded font-bold" to="/dashboard">
+    <div className="flex min-h-screen bg-gradient-to-br from-indigo-100 to-gray-100">
+
+          {/* FIXED LEFT SIDEBAR  */}
+      <aside
+        className="
+          hidden md:flex flex-col
+          w-64 
+          fixed top-0 left-0 
+          h-screen
+          bg-white/40 backdrop-blur-xl 
+          shadow-xl border-r border-white/50
+          p-6 z-40
+        "
+      >
+        <h1 className="text-2xl font-bold text-indigo-700 tracking-wide mb-8">
+          Finance App
+        </h1>
+
+        <nav className="flex flex-col gap-4 text-gray-700 font-medium">
+          <Link
+            to="/dashboard"
+            className="px-4 py-2 rounded-xl bg-indigo-600 text-white shadow"
+          >
             Dashboard
           </Link>
-          <Link className="px-4 py-2 rounded hover:bg-yellow-100" to="/income">
+          <Link to="/income" className="px-4 py-2 rounded-xl hover:bg-indigo-100">
             Income
           </Link>
-          <Link className="px-4 py-2 rounded hover:bg-yellow-100" to="/expenses">
+          <Link
+            to="/expenses"
+            className="px-4 py-2 rounded-xl hover:bg-indigo-100"
+          >
             Expenses
           </Link>
-          <Link className="px-4 py-2 rounded hover:bg-yellow-100" to="/category">
+          <Link
+            to="/category"
+            className="px-4 py-2 rounded-xl hover:bg-indigo-100"
+          >
             Category
           </Link>
-          <Link className="px-4 py-2 rounded hover:bg-yellow-100" to="/filter">
+          <Link to="/filter" className="px-4 py-2 rounded-xl hover:bg-indigo-100">
             Filter
           </Link>
         </nav>
       </aside>
 
-      {/* ---------------- MAIN CONTENT ---------------- */}
-      <main className="flex-1 p-6 md:ml-64 mt-20 overflow-y-auto h-screen">
-        <h1 className="text-3xl font-semibold mb-1">Welcome, {fullName || "User"} 👋</h1>
-        <p className="text-gray-500 mb-6">Your financial overview</p>
+          {/* MAIN CONTENT */}
 
-        {/* ---------- Summary Cards ---------- */}
+      <main className="flex-1 ml-64 p-10">
+        <h2 className="text-3xl font-semibold text-gray-800">
+        Welcome, {fullName || "User"} 👋
+        </h2>
+
+        <p className="text-gray-600 mb-10">Here is your financial overview</p>
+
+        {/* SUMMARY CARDS */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-xl shadow-sm border">
-            <h3 className="text-gray-600">Total Balance</h3>
-            <p className="text-4xl font-semibold text-indigo-600 mt-2">₹{summary.totalBalance}</p>
-          </div>
-          <div className="bg-white p-6 rounded-xl shadow-sm border">
-            <h3 className="text-gray-600">Total Income</h3>
-            <p className="text-4xl font-semibold text-green-600 mt-2">₹{summary.totalIncome}</p>
-          </div>
-          <div className="bg-white p-6 rounded-xl shadow-sm border">
-            <h3 className="text-gray-600">Total Expenses</h3>
-            <p className="text-4xl font-semibold text-red-600 mt-2">₹{summary.totalExpenses}</p>
-          </div>
+          {[
+            { title: "Total Balance", value: summary.totalBalance, color: "text-indigo-600" },
+            { title: "Total Income", value: summary.totalIncome, color: "text-green-600" },
+            { title: "Total Expenses", value: summary.totalExpenses, color: "text-red-600" },
+          ].map((c, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-white/60 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/50"
+            >
+              <h3 className="text-gray-600">{c.title}</h3>
+              <p className={`text-4xl font-bold mt-3 ${c.color}`}>₹{c.value}</p>
+            </motion.div>
+          ))}
         </div>
 
-        {/* ---------- Charts ---------- */}
+        {/* CHARTS */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10">
-          <div className="bg-white p-6 rounded-xl shadow-sm border">
-            <h3 className="text-lg font-semibold text-gray-700 mb-4">Income vs Expense</h3>
+          <div className="bg-white/70 backdrop-blur-xl p-6 rounded-2xl shadow border border-white/40">
+            <h3 className="text-lg font-semibold mb-4">Income vs Expense</h3>
             <Pie data={pieData} />
           </div>
-          <div className="bg-white p-6 rounded-xl shadow-sm border">
-            <h3 className="text-lg font-semibold text-gray-700 mb-4">Monthly Trend</h3>
+
+          <div className="bg-white/70 backdrop-blur-xl p-6 rounded-2xl shadow border border-white/40">
+            <h3 className="text-lg font-semibold mb-4">Monthly Trend</h3>
             <Bar data={barData} />
           </div>
         </div>
 
-        {/* ---------- Filter Component ---------- */}
+        {/* FILTER SECTION */}
         <div className="mt-10">
-          <Filter onResult={handleFilterResult} />
+          <Filter onResult={(data) => setTransactions(data)} />
         </div>
 
-        {/* ---------- Transactions Table ---------- */}
-        <div className="mt-6 bg-white p-6 rounded-xl shadow-sm border">
-          <h2 className="text-xl font-semibold mb-4">Transactions</h2>
-          {transactions.length === 0 ? (
-            <p className="text-gray-500">No transactions found.</p>
+        {/* TRANSACTIONS TABLE */}
+        <div className="mt-10 bg-white/70 backdrop-blur-xl p-6 rounded-2xl shadow border border-white/40">
+          <h3 className="text-xl font-semibold mb-4">Transactions</h3>
+
+          {!transactions.length ? (
+            <p className="text-gray-500">No transactions found</p>
           ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-full border">
-                <thead className="bg-gray-50 border-b">
+              <table className="min-w-full rounded-xl overflow-hidden border border-gray-200">
+                <thead className="bg-indigo-50">
                   <tr>
-                    <th className="p-3 text-left text-sm text-gray-500">Title</th>
-                    <th className="p-3 text-left text-sm text-gray-500">Type</th>
-                    <th className="p-3 text-left text-sm text-gray-500">Amount</th>
-                    <th className="p-3 text-left text-sm text-gray-500">Date</th>
+                    <th className="p-3 text-left text-gray-600">Title</th>
+                    <th className="p-3 text-left text-gray-600">Type</th>
+                    <th className="p-3 text-left text-gray-600">Amount</th>
+                    <th className="p-3 text-left text-gray-600">Date</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {transactions.map((t) => (
-                    <tr key={t.id} className="border-b hover:bg-gray-50">
+                    <tr
+                      key={t.id}
+                      className="border-b hover:bg-indigo-100/40 transition"
+                    >
                       <td className="p-3">{t.name || t.title}</td>
                       <td className="p-3 capitalize">{t.type}</td>
-                      <td className={`p-3 font-bold ${t.type === "expense" ? "text-red-600" : "text-green-600"}`}>
+                      <td
+                        className={`p-3 font-semibold ${
+                          t.type === "expense" ? "text-red-600" : "text-green-600"
+                        }`}
+                      >
                         {t.type === "expense" ? "-" : "+"}₹{t.amount}
                       </td>
-                      <td className="p-3 text-gray-500">{new Date(t.date).toLocaleDateString()}</td>
+                      <td className="p-3 text-gray-500">
+                        {new Date(t.date).toLocaleDateString()}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

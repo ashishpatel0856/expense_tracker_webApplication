@@ -29,13 +29,20 @@ const Login = () => {
         password,
       });
 
-      console.log("Login success:", response.data);
+  localStorage.setItem("token", response.data.token);
 
-      // assuming backend returns: { token: "..." }
-      localStorage.setItem("token", response.data.token);
+// overwrite only if backend returns the name
+if (response.data.fullName) {
+  localStorage.setItem("fullName", response.data.fullName);
+}
+
+navigate("/dashboard");
+
+
+
 
       // Redirect to dashboard/home
-      navigate("/dashboard");
+      // navigate("/dashboard");
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Invalid email or password");
