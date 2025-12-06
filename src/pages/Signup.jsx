@@ -64,7 +64,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="h-screen w-full relative flex items-center justify-center overflow-hidden">
+    <div className="h-screen w-full relative flex items-center justify-center overflow-hidden  ">
       <img
         src={logo_bg}
         alt="Background"
