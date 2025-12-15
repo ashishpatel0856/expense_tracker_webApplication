@@ -28,6 +28,7 @@ export default function Filter({ onResult }) {
     try {
       const res = await axiosConfig.post("/filter", filters);
       onResult(res.data);
+    
     } catch (err) {
       console.error("Filter Error:", err);
       alert("Error fetching filtered transactions");

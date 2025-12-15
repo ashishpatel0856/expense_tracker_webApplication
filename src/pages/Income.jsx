@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosConfig from "../util/axiosConfig";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 export default function Income() {
   const [incomes, setIncomes] = useState([]);
@@ -184,9 +185,13 @@ export default function Income() {
                   <span className="text-2xl">{inc.icon || "💰"}</span>
                   <div>
                     <p className="font-medium">{inc.name}</p>
-                    <p className="text-sm text-gray-500">
-                      Amount: ₹{inc.amount} | Category: {inc.categoryName} {inc.icon ? `(${inc.icon})` : ""}
+                    <div className="flex "><p >Amount:</p>
+                    <p><FaIndianRupeeSign className="text-gray-600 size-4 mt-1 "/></p>
+                    <p className="text-base text-gray-500 ">
+                        {inc.amount}  
                     </p>
+                    </div>
+                        <p className="text-sm text-gray-500 mb-1"> Category: {inc.categoryName} {inc.icon ? `(${inc.icon})` : ""}</p>
                     <p className="text-xs text-gray-400">
                       Date: {new Date(inc.date).toLocaleDateString()}
                     </p>

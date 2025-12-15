@@ -69,7 +69,7 @@ export default function Category() {
   }, [filterType]);
 
   return (
-    <div className="max-w-3xl mx-auto dark:bg-gray-900 p-4 mt-6 space-y-6">
+    <div className="max-w-3xl mx-auto bg-white p-4 mt-6 space-y-6">
 
       {/* FILTER BUTTONS */}
       <div className="flex gap-3">

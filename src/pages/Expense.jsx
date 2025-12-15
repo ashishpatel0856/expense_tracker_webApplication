@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosConfig from "../util/axiosConfig";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 export default function Expense() {
   const [expenses, setExpenses] = useState([]);
@@ -206,9 +207,13 @@ export default function Expense() {
 
                   <div>
                     <p className="font-semibold text-gray-900">{exp.name}</p>
-                    <p className="text-gray-600 text-sm">
-                      ₹{exp.amount} • {exp.categoryName}
+                    <div className="flex ">
+                      <FaIndianRupeeSign className="text-gray-700 mt-1 h-3"/>
+                       <p className="text-gray-600 text-sm ">
+                      {exp.amount} • {exp.categoryName}
                     </p>
+                    </div>
+                    
                     <p className="text-xs text-gray-400">
                       {new Date(exp.date).toLocaleDateString()}
                     </p>

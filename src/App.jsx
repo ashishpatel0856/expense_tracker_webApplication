@@ -11,11 +11,11 @@ import Dashboard from "./pages/Dashboard";
 import Income from "./pages/Income";
 import Expense from "./pages/Expense";
 import Category from "./pages/Category";
-import Filter from "./pages/Filter";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Layout from "./components/Layout";
+import Filter from "./pages/Filter";
 
 const App = () => {
   return (

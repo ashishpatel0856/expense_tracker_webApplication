@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axiosConfig from "../util/axiosConfig";
 import Filter from "./Filter";
 import { Pie, Bar } from "react-chartjs-2";
+import { FaIndianRupeeSign } from "react-icons/fa6";
+
 import {
   Chart as ChartJS,
   ArcElement,
@@ -173,7 +175,7 @@ const Dashboard = () => {
               className="bg-white/60 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/50"
             >
               <h3 className="text-gray-600">{c.title}</h3>
-              <p className={`text-4xl font-bold mt-3 ${c.color}`}>₹{c.value}</p>
+              <p className={`text-2xl font-bold mt-3 flex ${c.color}`}><FaIndianRupeeSign className="mt-1"/>{c.value}</p>
             </motion.div>
           ))}
         </div>
