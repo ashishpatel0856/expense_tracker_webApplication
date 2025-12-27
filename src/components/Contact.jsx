@@ -30,7 +30,7 @@ const Contact = () => {
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-6">
       
-      {/* CONTAINER */}
+     {/* container */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -92,7 +92,7 @@ const Contact = () => {
           </motion.button>
         </form>
 
-        {/* Status Message */}
+        
         {status && (
           <p className="text-center mt-4 font-semibold text-green-600 dark:text-green-400">
             {status}

@@ -21,7 +21,23 @@ export default function Income() {
   // Available icons
   const ICONS = ["💰","🏦","🎁","💡","🏠","🚗","🛒","🍔","🎉","🛍️"];
 
-  // -------- FETCH INCOMES --------
+  // add incomes
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await axiosConfig.post("/Incomes", formData);
+      setFormData({ name: "", amount: "", categoryId: "", date: "", icon: "💰" });
+      loadIncomes();
+    } catch (err) {
+      console.error("Error adding income", err);
+    } finally{
+      setLoading(false)
+    }
+  };
+
+
+  // get incomes
   const loadIncomes = async () => {
     try {
       setLoading(true);
@@ -34,7 +50,7 @@ export default function Income() {
     }
   };
 
-  // -------- FETCH CATEGORIES --------
+  // fetch category
   const loadCategories = async () => {
     try {
       const res = await axiosConfig.get("/categories/INCOME");
@@ -44,30 +60,20 @@ export default function Income() {
     }
   };
 
-  // -------- HANDLE INPUT --------
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // -------- PICK RANDOM ICON --------
+
   const pickRandomIcon = () => {
     const randomIcon = ICONS[Math.floor(Math.random() * ICONS.length)];
     setFormData({ ...formData, icon: randomIcon });
   };
 
-  // -------- SUBMIT (POST) --------
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axiosConfig.post("/Incomes", formData);
-      setFormData({ name: "", amount: "", categoryId: "", date: "", icon: "💰" });
-      loadIncomes();
-    } catch (err) {
-      console.error("Error adding income", err);
-    }
-  };
+ 
 
-  // -------- DELETE --------
+  
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this income?")) {
       try {
@@ -79,6 +85,7 @@ export default function Income() {
     }
   };
 
+  
   useEffect(() => {
     loadIncomes();
     loadCategories();
@@ -124,7 +131,8 @@ export default function Income() {
           </Link>
         </nav>
       </aside>
-      {/* FORM CARD */}
+     
+     {/* form card */}
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-xl shadow p-5 space-y-4"
@@ -151,7 +159,7 @@ export default function Income() {
           className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-indigo-400"
         />
 
-        {/* CATEGORY DROPDOWN */}
+        {/* CATEGORY  */}
         <select
           name="categoryId"
           value={formData.categoryId}

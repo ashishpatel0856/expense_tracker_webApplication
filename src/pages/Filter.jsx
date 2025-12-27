@@ -3,6 +3,8 @@ import axiosConfig from "../util/axiosConfig";
 import { Link } from "react-router-dom";
 import { Menu } from "lucide-react";
 export default function Filter({ onResult }) {
+  
+  const [loading,setLoading] =useState(false);
   const [filters, setFilters] = useState({
     type: "expense",
     startDate: "",
@@ -25,14 +27,15 @@ const [openSidebar,setOpenSidebar]=useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true)
     try {
       const res = await axiosConfig.post("/filter", filters);
       onResult(res.data);
-    
     } catch (err) {
       console.error("Filter Error:", err);
       alert("Error fetching filtered transactions");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -77,8 +80,6 @@ const [openSidebar,setOpenSidebar]=useState(false)
       <h2 className="text-xl font-semibold mb-3">Filter Transactions</h2>
 
       <form className="grid grid-cols-1 md:grid-cols-2 gap-4" onSubmit={handleSubmit}>
-
-        {/* Type */}
         <select
           name="type"
           value={filters.type}
@@ -89,7 +90,6 @@ const [openSidebar,setOpenSidebar]=useState(false)
           <option value="income">Income</option>
         </select>
 
-        {/* Keyword */}
         <input
           type="text"
           name="keyword"
@@ -99,7 +99,7 @@ const [openSidebar,setOpenSidebar]=useState(false)
           className="p-2 border rounded-md"
         />
 
-        {/* Start Date */}
+   
         <input
           type="date"
           name="startDate"
@@ -108,7 +108,7 @@ const [openSidebar,setOpenSidebar]=useState(false)
           className="p-2 border rounded-md"
         />
 
-        {/* End Date */}
+       
         <input
           type="date"
           name="endDate"
@@ -117,7 +117,7 @@ const [openSidebar,setOpenSidebar]=useState(false)
           className="p-2 border rounded-md"
         />
 
-        {/* Sort Field */}
+        
         <select
           name="sortField"
           value={filters.sortField}
@@ -131,7 +131,7 @@ const [openSidebar,setOpenSidebar]=useState(false)
           ))}
         </select>
 
-        {/* Sort Order */}
+     
         <select
           name="sortOrder"
           value={filters.sortOrder}

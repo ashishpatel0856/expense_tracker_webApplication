@@ -38,7 +38,6 @@ const Dashboard = () => {
   const [transactions, setTransactions] = useState([]);
   const [monthly, setMonthly] = useState([]);
   const [loading, setLoading] = useState(true);
-
   // sidebar toggle (mobile)
   const [openSidebar, setOpenSidebar] = useState(false);
 

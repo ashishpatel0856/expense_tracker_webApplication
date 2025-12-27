@@ -8,7 +8,7 @@ export default function Expense() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openSidebar,setOpenSidebar]=useState(false)
-
+  
   const [formData, setFormData] = useState({
     name: "",
     amount: "",
@@ -17,7 +17,6 @@ export default function Expense() {
     icon: "",
   });
 
-  // Random icons for expense
   const ICONS = ["💸", "🛒", "🍔", "🚗", "🏠", "📱", "🛍️", "🎉", "🍕", "⚡"];
 
   // Use random icon by default

@@ -25,20 +25,18 @@ const Navbar = () => {
     <nav className="w-full bg-white dark:bg-gray-900 text-black dark:text-white shadow-lg fixed top-0 left-0 z-50">
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
         
-        {/* LEFT: Logo */}
-        <div className="flex items-center gap-2">
+        {/* logo */}
+        <div className="flex items-center gap-2 md:-ml-[6px]">
           <img src={icon} alt="logo" className="w-12 h-12 object-contain" />
           <h1 className="font-extrabold text-lg">Money Manager</h1>
         </div>
 
-        {/* CENTER: Links (hidden on mobile) */}
         <div className="hidden md:flex gap-8">
           <Link to="/home" className="hover:text-yellow-500 font-semibold">Home</Link>
           <Link to="/about" className="hover:text-yellow-500 font-semibold">About Us</Link>
           <Link to="/contact" className="hover:text-yellow-500 font-semibold">Contact Us</Link>
         </div>
 
-        {/* RIGHT: Auth / Dashboard */}
         <div className="hidden md:flex items-center gap-2">
           {!token && !isDashboard && (
             <button

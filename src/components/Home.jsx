@@ -19,7 +19,7 @@ const Home = () => {
       <section className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-20 lg:py-28">
-            {/* Left - text */}
+            {/* Left text */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -54,7 +54,8 @@ const Home = () => {
                 </Link>
               </div>
 
-              {/* quick stats */}
+      
+                  {/* cards */}
               <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-4">
                 <motion.div
                   initial="hidden"
@@ -91,14 +92,13 @@ const Home = () => {
               </div>
             </motion.div>
 
-            {/* Right - illustration (analytics dashboard style) */}
+            {/* right part */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               className="flex justify-center lg:justify-end"
             >
-              {/* Inline SVG illustration (simple analytics dashboard) */}
               <div className="w-full max-w-md">
                 <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
                   <div className="flex items-center justify-between mb-4">
@@ -106,7 +106,7 @@ const Home = () => {
                     <div className="h-3 w-10 rounded-full bg-gray-200 dark:bg-gray-700"></div>
                   </div>
 
-                  {/* mock chart */}
+                  
                   <svg viewBox="0 0 320 140" className="w-full h-40">
                     <defs>
                       <linearGradient id="g1" x1="0" x2="1">
@@ -135,7 +135,6 @@ const Home = () => {
                   </div>
                 </div>
 
-                {/* small feature badges below illustration */}
                 <div className="mt-4 flex gap-3 justify-between text-xs">
                   <span className="px-3 py-2 rounded-full bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-200">Real-time</span>
                   <span className="px-3 py-2 rounded-full bg-emerald-50 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-200">Secure</span>
@@ -146,7 +145,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* decorative shapes */}
+        
         <div className="pointer-events-none absolute inset-0 -z-10">
           <svg className="hidden lg:block absolute right-0 top-0 transform translate-x-24 -translate-y-24" width="420" height="420" viewBox="0 0 420 420" fill="none">
             <circle cx="210" cy="210" r="140" fill="url(#lg1)" opacity="0.06" />

@@ -6,7 +6,7 @@ const About = () => {
     <div className="w-full min-h-screen bg-gray-50 dark:bg-gray-900 py-20 px-6">
       <div className="max-w-6xl mx-auto">
 
-        {/* HEADER */}
+        {/* header part */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -23,10 +23,10 @@ const About = () => {
           </p>
         </motion.div>
 
-        {/* MAIN CONTENT GRID */}
+        {/* content */}
         <div className="grid md:grid-cols-2 gap-12 mt-20 items-center">
 
-          {/* LEFT SECTION */}
+          {/* left part */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -50,7 +50,7 @@ const About = () => {
             </p>
           </motion.div>
 
-          {/* RIGHT IMAGE / ILLUSTRATION */}
+          {/* right image */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -66,14 +66,12 @@ const About = () => {
           </motion.div>
         </div>
 
-        {/* FEATURES SECTION */}
+        {/* card secttion */}
         <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mt-24 mb-10">
           What Makes Money Manager Different?
         </h2>
 
         <div className="grid md:grid-cols-3 gap-10 mt-4">
-
-          {/* Card 1 */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -89,7 +87,6 @@ const About = () => {
             </p>
           </motion.div>
 
-          {/* Card 2 */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -105,7 +102,6 @@ const About = () => {
             </p>
           </motion.div>
 
-          {/* Card 3 */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

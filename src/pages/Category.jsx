@@ -54,13 +54,13 @@ export default function Category() {
     }
   };
 
-  // -------- SELECT FOR UPDATE --------
+  
   const handleEdit = (cat) => {
     setSelectedCategory(cat);
     setFormData({ name: cat.name, type: cat.type, icon: cat.icon || ICONS[0] });
   };
 
-  // -------- CHANGE FILTER --------
+  
   const handleFilter = (type) => {
     setFilterType(type);
   };
