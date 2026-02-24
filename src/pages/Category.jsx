@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axiosConfig from "../util/axiosConfig";
 import { Link } from "react-router-dom";
 import { Menu } from "lucide-react";
-//  icons 
 const ICONS = ["💰", "🛒", "🏠", "🍔", "🎁", "🚗", "💡"];
 
 export default function Category() {
@@ -13,7 +12,7 @@ export default function Category() {
   const [formData, setFormData] = useState({
     name: "",
     type: "EXPENSE",
-    icon: ICONS[0], // default icon
+    icon: ICONS[0], 
   });
 
   // FETCH BASED ON FILTER 
@@ -31,12 +30,10 @@ export default function Category() {
     }
   };
 
-  //  HANDLE INPUT
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  //  SUBMIT (POST + PUT)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -108,7 +105,6 @@ export default function Category() {
           </Link>
         </nav>
       </aside>
-      {/* FILTER BUTTONS */}
       <div className="flex gap-3">
         {["ALL", "INCOME", "EXPENSE"].map((type) => (
           <button
@@ -129,7 +125,6 @@ export default function Category() {
         ))}
       </div>
 
-      {/* FORM CARD */}
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-xl shadow p-5 space-y-4"
@@ -192,7 +187,6 @@ export default function Category() {
         )}
       </form>
 
-      {/* CATEGORY LIST */}
       <div className="bg-white rounded-xl shadow p-5">
         <h2 className="text-lg font-semibold text-slate-800 mb-4">
           {filterType === "ALL"

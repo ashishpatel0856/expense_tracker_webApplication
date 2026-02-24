@@ -25,7 +25,6 @@ const Navbar = () => {
     <nav className="w-full bg-white dark:bg-gray-900 text-black dark:text-white shadow-lg fixed top-0 left-0 z-50">
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
         
-        {/* logo */}
         <div className="flex items-center gap-2 md:-ml-[6px]">
           <img src={icon} alt="logo" className="w-12 h-12 object-contain" />
           <h1 className="font-extrabold text-lg">Money Manager</h1>

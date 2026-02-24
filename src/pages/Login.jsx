@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo_bg from "../assets/logo_bg.jpg";
-import Input from "../components/input";
+import Input from "../components/Input";
 import axiosConfig from "../util/axiosConfig.jsx";
 
 const Login = () => {
@@ -42,7 +42,6 @@ navigate("/dashboard");
 
 
       // Redirect to dashboard/home
-      // navigate("/dashboard");
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Invalid email or password");

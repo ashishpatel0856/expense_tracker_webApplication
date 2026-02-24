@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo_bg from "../assets/logo_bg.jpg";
-import Input from '../components/input';
+import Input from '../components/Input';
 import { Link } from "react-router-dom";
 import axiosConfig from "../util/axiosConfig.jsx";
 
 const Signup = () => {
-  // Form state
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,11 +17,8 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
-  // Form submit handler
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent page reload
-
-    console.log("Form submit triggered"); // check if submit works
+    e.preventDefault(); 
 
     //  validation
     if (!fullName || !email || !password) {
@@ -30,11 +26,10 @@ const Signup = () => {
       return;
     }
 
-    setError(null); // clear previous errors
-    setLoading(true); // show loading state
+    setError(null); 
+    setLoading(true); 
 
     try {
-      // POST request to backend
       const response = await axiosConfig.post("/register", {
         fullName,
         email,
@@ -42,7 +37,7 @@ const Signup = () => {
       });
 
       console.log("Signup success:", response.data); 
-     setSuccess("🎉 Signup Successful! Redirecting to Login...");
+     setSuccess(" Signup Successful! Redirecting to Login...");
 
       setTimeout(() => {
         navigate("/login");
@@ -53,8 +48,6 @@ const Signup = () => {
       localStorage.setItem("token", response.data.token || ""); 
 
       //  navigate to dashboard after signup
-      // navigate("/dashboard");
-
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Signup failed. Please try again.");
@@ -71,7 +64,6 @@ const Signup = () => {
         className="absolute inset-0 w-full h-full object-cover filter blur-sm"
       />
 
-      {/* Signup form container */}
       <div className="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow-2xl p-8 max-h-[90vh] overflow-y-auto">
         <h3 className="text-2xl font-semibold text-black text-center mb-2">
           Create An Account

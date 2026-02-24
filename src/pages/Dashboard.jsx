@@ -155,7 +155,7 @@ const Dashboard = () => {
       {/* MAIN CONTENT */}
       <main className="flex-1 md:ml-64 p-6 sm:p-8 mt-10 md:mt-0">
         <h2 className="text-3xl font-semibold text-gray-800">
-          Welcome, {fullName || "User"} 👋
+          Welcome, {fullName || "User"} 
         </h2>
 
         <p className="text-gray-600 mb-10">Here is your financial overview</p>
